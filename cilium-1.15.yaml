@@ -1,7 +1,7 @@
 package:
-  name: cilium-1.14
-  version: 1.14.7
-  epoch: 0
+  name: cilium-1.15
+  version: 1.15.1
+  epoch: 2
   description: Cilium is a networking, observability, and security solution with an eBPF-based dataplane
   copyright:
     - license: Apache-2.0
@@ -52,14 +52,14 @@ environment:
 
 vars:
   # https://github.com/cilium/cilium/blob/v1.14.7/images/cilium/Dockerfile
-  CILIUM_PROXY_COMMIT: "39dc41f86c465d2a2d16386339dc0bf4d425babc"
+  CILIUM_PROXY_COMMIT: "713b673cccf1af661efd75ca20532336517ddcb9"
 
 pipeline:
   - uses: git-checkout
     with:
       repository: https://github.com/cilium/cilium
       tag: v${{package.version}}
-      expected-commit: 91b461c78160ff5c96cad23a85e4287093753c22
+      expected-commit: a368c8f0f34dfe9a47e8a621af31ea94337f6fb5
 
   - uses: patch
     with:
@@ -112,7 +112,8 @@ pipeline:
       cp -v libcilium.so ${{targets.destdir}}/usr/lib/libcilium.so
 
       cd /home/build/envoy
-
+      # The Python interpreter complains about being run as root, there's a flag to pass to disable that warning.
+      sed -i 's/envoy_dependencies_extra()/envoy_dependencies_extra(ignore_root_user_error=True)/g' WORKSPACE
       export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
       mkdir -p .cache/bazel/_bazel_root
 
@@ -209,4 +210,4 @@ update:
   github:
     identifier: cilium/cilium
     strip-prefix: v
-    tag-filter-prefix: v1.14.
+    tag-filter-prefix: v1.15.
