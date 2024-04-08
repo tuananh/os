@@ -1,7 +1,7 @@
 package:
   name: telegraf-1.30
-  version: 1.30.0
-  epoch: 0
+  version: 1.30.1
+  epoch: 1
   description: Telegraf is an agent for collecting, processing, aggregating, and writing metric
   copyright:
     - license: MIT
@@ -22,12 +22,8 @@ pipeline:
   - uses: git-checkout
     with:
       tag: v${{package.version}}
-      expected-commit: d399c687f3385303daeefad10dfe05e38ca8aa50
+      expected-commit: fb76952e1ed35eb833f67909164cb99f5e98d7fa
       repository: https://github.com/influxdata/telegraf
-
-  - uses: go/bump
-    with:
-      deps: github.com/cloudevents/sdk-go/v2@v2.15.2
 
   - if: ${{build.arch}} == 'x86_64'
     runs: |

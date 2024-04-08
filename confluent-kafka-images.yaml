@@ -1,8 +1,8 @@
 #nolint:git-checkout-must-use-github-updates
 package:
   name: confluent-kafka-images
-  version: 7.6.1.17
-  epoch: 1
+  version: 7.7.0.14
+  epoch: 0
   description: Provides build files for Apache Kafka and Confluent Docker images
   copyright:
     - license: Apache-2.0
@@ -22,7 +22,7 @@ var-transforms:
 pipeline:
   - uses: git-checkout
     with:
-      expected-commit: d673ff4a9b0c77d5ee34956aabadc4e177c06660
+      expected-commit: 41667d4e6fca40706efdfb6fb82ba58158a150c6
       repository: https://github.com/confluentinc/kafka-images
       tag: v${{vars.mangled-package-version}}
 
